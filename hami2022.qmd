@@ -1,0 +1,192 @@
+---
+title: "Programming Language Theory"
+format:
+  revealjs:
+    show-notes: separate-page
+    theme: black
+---
+
+### Company
+
+![](./secondstate.png) 編譯器
+
+![](./glasnostic.png) 軟體路由
+
+---
+
+### Who am I?
+
+- programming language
+- math
+- history
+
+---
+
+Can this program stop?
+
+```c
+for (int a=0; a<10; a++);
+```
+
+---
+
+# Yes, but why?
+
+---
+
+<style>
+code.blue {
+  color: #337AB7 !important;
+}
+code.orange {
+  color: #F7A004 !important;
+}
+code.red {
+  color: #B40926 !important;
+}
+</style>
+
+- <code class="orange">a=0</code>: initial value
+- <code class="blue">a<10</code>: stop condition
+- <code class="red">a++</code>: step
+
+---
+
+### Goto considered harmful
+
+##### Dijstra
+
+---
+
+### Hoare Logic
+
+$$
+\frac{}{
+	\{P\}{\epsilon}\{P\}
+}{Empty\;statement\;axiom}
+$$
+
+$$
+\frac{}{\{P[E/x]\} x := E\{P\}}{Assignment\;axiom}
+$$
+
+$$
+\frac{\{P\}{S}\{Q\}, \{Q\}{T}\{R\}}
+{\{P\}{S;T}\{R\}}
+{Rule\;of\;composition}
+$$
+
+$$
+\frac{\{B \land P\}{S}\{Q\}, \{\lnot B \land P \}{T}\{Q\}}
+{\{P\}{if \; B \; then \; S \; else \; T}\{Q\}}
+{Conditional\;rule}
+$$
+
+---
+
+### Hoare Logic
+
+$$
+\frac{
+	P_1 \to P_2, \{P_2\}S\{Q_2\}, Q_2 \to Q_1
+}{
+    \{P_1\}S\{Q_1\}
+}{Consequence \; rule}
+$$
+
+$$
+\frac{
+	\{P \land B\} S \{P\}
+}{
+	\{P\} while \; B \; do \; S \; done \{\lnot B \land P\}
+}{While \; rule}
+$$
+
+---
+
+## Too hard to verify
+
+---
+
+### Recursion
+
+```ocaml
+let rec length : 'a list -> int =
+  fun l ->
+  match l with
+  | [] -> 0
+  | (x :: xs) -> 1 + length xs
+```
+
+---
+
+### Natural Number
+
+```haskell
+data Nat = 0 | S Nat
+```
+
+```{dot}
+digraph {
+  compound=true
+  node [ fontname="Source Sans Pro", fontsize=15];
+  0 -> "1" -> "2"
+}
+```
+
+---
+
+### The points
+
+1. `[]` is the `0`(base case)
+2. `x :: xs` is `S 0`(induction case)
+
+---
+
+### Binary Tree
+
+```{dot}
+digraph {
+  compound=true
+  node [ fontname="Source Sans Pro", fontsize=15];
+	0 -> 1
+	0 -> 2
+	1 -> 3
+	1 -> 4
+	2 -> 5
+	2 -> 6
+}
+```
+
+---
+
+### Prove recursion stop
+
+1. Find a base case(or cases)
+2. Ensure induction case reduced
+
+---
+
+### Compare with loop, recursion is easier to prove
+
+---
+
+### Logic, Type, and Category
+
+---
+
+### Real world verification
+
+1. F\* verify the whole TCP/IP stack(Microsoft)
+2. Four colour theorem(Coq, INRIA)
+3. CompCert: C compiler that eliminates memory bugs
+4. seL4: Operating System that will not crash
+
+---
+
+### Thank you!
+
+You can find me on
+
+- GitHub: @dannypsnl
+- Email: dannypsnl@gmail.com
